@@ -17,7 +17,7 @@ def get_disciplines(file: BytesIO) -> list[Discipline]:
     column_name: str = "-.3"
     exclude = "Дисциплины"
     columns: dict[str, int] = _parse_column_names(plan_sheet)
-    disciplines: dict[str, list[int]] = _parse_disciplines(
+    disciplines: dict[str, set[int]] = _parse_disciplines(
         plan_sheet,
         columns,
         column_name,
@@ -26,7 +26,7 @@ def get_disciplines(file: BytesIO) -> list[Discipline]:
     mapped_disciplines: list[Discipline] = []
 
     for discipline in disciplines.keys():
-        mapped_disciplines.append(Discipline(name=discipline, terms=disciplines[discipline]))
+        mapped_disciplines.append(Discipline(name=discipline, terms=list(disciplines[discipline])))
 
     return mapped_disciplines
 
@@ -48,9 +48,9 @@ def _parse_disciplines(
         columns: dict[str, int],
         column_name: str,
         exclude: str
-) -> dict[str, list[int]]:
+) -> dict[str, set[int]]:
     log.info(f"Parsing disciplines information from sheet: {sheet.info}")
-    disciplines: dict[str, list[int]] = {}
+    disciplines: dict[str, set[int]] = {}
 
     for i, row in sheet.iterrows():
         if i < 2:
@@ -70,8 +70,8 @@ def _parse_disciplines(
             if col in columns and not isnull(cell):
                 term = columns[col]
 
-        if not isnull(discipline) and discipline != "" and term != "":
-            disciplines.setdefault(discipline, [])
-            disciplines[discipline].append(term)
+            if not isnull(discipline) and discipline != "" and term != "":
+                disciplines.setdefault(discipline, set())
+                disciplines[discipline].add(term)
 
     return disciplines
