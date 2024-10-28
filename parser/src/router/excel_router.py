@@ -4,6 +4,8 @@ from io import BytesIO
 
 from fastapi import APIRouter, UploadFile, HTTPException
 
+from ..messaging import producer
+from ..schema.models import Student, Discipline
 from ..service import discipline_service, student_service
 
 router = APIRouter()
@@ -22,8 +24,10 @@ async def get_students(file: UploadFile):
         raise HTTPException(status_code=400, detail="Wrong file format")
 
     content = await file.read()
-    student_service.get_students(BytesIO(content))
-    # call kafka service
+    students: list[Student] = student_service.get_students(BytesIO(content))
+
+    for student in students:
+        await producer.send_student(student)
 
 
 @router.post(
@@ -38,5 +42,7 @@ async def get_disciplines(file: UploadFile):
         raise HTTPException(status_code=400, detail="Wrong file format")
 
     content = await file.read()
-    discipline_service.get_disciplines(BytesIO(content))
-    # call kafka service
+    disciplines: list[Discipline] = discipline_service.get_disciplines(BytesIO(content))
+
+    for discipline in disciplines:
+        await producer.send_discipline(discipline)
