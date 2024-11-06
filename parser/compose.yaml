@@ -1,0 +1,74 @@
+services:
+  #  db:
+  #    container_name: postgres
+  #    image: postgres:alpine
+  #    restart: always
+  #    expose:
+  #      - "5432"
+  #    environment:
+  #      POSTGRES_USER: postgres
+  #      POSTGRES_PASSWORD: postgres
+  #      POSTGRES_DB: test
+  #    volumes:
+  #      - postgres_data:/var/lib/postgresql/data
+
+  app:
+    container_name: app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/test
+      KAFKA_BOOTSTRAP_SERVERS: kafka:29093
+      KAFKA_TOPIC_1: student
+      KAFKA_TOPIC_2: discipline
+    depends_on:
+      kafka:
+        condition: service_healthy
+
+  zookeeper:
+    container_name: zookeeper
+    image: confluentinc/cp-zookeeper:latest
+    expose:
+      - "22181"
+    environment:
+      - ZOOKEEPER_CLIENT_PORT=22181
+
+  kafka:
+    container_name: kafka
+    image: confluentinc/cp-kafka:latest
+    expose:
+      - "29093"
+    environment:
+      - KAFKA_BROKER_ID=1
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:22181
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka:29093
+      - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT
+      - KAFKA_INTER_BROKER_LISTENER_NAME=PLAINTEXT
+      - KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1
+    depends_on:
+      - zookeeper
+    healthcheck:
+      test: [ "CMD", "nc", "-z", "localhost", "29093" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui
+    container_name: kafka-ui
+    ports:
+      - "8090:8080"
+    restart: always
+    environment:
+      - KAFKA_CLUSTERS_0_NAME=local
+      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka:29093
+      - KAFKA_CLUSTERS_0_ZOOKEEPER=zookeeper:22181
+    depends_on:
+      - kafka
+      - zookeeper
+
+volumes:
+  postgres_data:
