@@ -5,6 +5,7 @@ class Student(BaseModel):
     name: str
     surname: str
     patronymic: str
+    course: int
 
 
 class Discipline(BaseModel):

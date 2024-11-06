@@ -22,17 +22,19 @@ producer = AIOKafkaProducer(
 log = logging.getLogger("uvicorn.error")
 
 
-async def send_student(student: Student):
-    log.info(f"Sending student with name: {student.name} to topic {STUDENT_KAFKA_TOPIC}")
+async def send_student(student: Student, major: str):
+    log.info(f"Sending student with surname: {student.surname} to topic {STUDENT_KAFKA_TOPIC}")
     await producer.send(
-        STUDENT_KAFKA_TOPIC,
-        json.dumps(student.dict()).encode("utf-8")
+        topic=STUDENT_KAFKA_TOPIC,
+        key=json.dumps(major).encode("utf-8"),
+        value=json.dumps(student.dict()).encode("utf-8")
     )
 
 
-async def send_discipline(discipline: Discipline):
+async def send_discipline(discipline: Discipline, major: str):
     log.info(f"Sending discipline message with name: {discipline.name} to topic {DISCIPLINE_KAFKA_TOPIC}")
     await producer.send(
-        DISCIPLINE_KAFKA_TOPIC,
-        json.dumps(discipline.dict()).encode("utf-8")
+        topic=DISCIPLINE_KAFKA_TOPIC,
+        key=json.dumps(major).encode("utf-8"),
+        value=json.dumps(discipline.dict()).encode("utf-8")
     )
