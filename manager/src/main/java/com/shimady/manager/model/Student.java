@@ -28,7 +28,7 @@ public class Student {
     private Integer course;
 
     @Column(name = "has_record_book")
-    private Boolean hasRecordBook;
+    private Boolean hasRecordBook = false;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "major_id")

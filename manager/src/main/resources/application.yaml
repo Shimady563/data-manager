@@ -3,3 +3,17 @@ spring:
     name: manager
   liquibase:
     change-log: classpath:/db/changelog/db-changelog-master.xml
+  kafka:
+    consumer:
+      group-id: manager
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: "*"
+kafka:
+  topic:
+    1: student
+    2: discipline
