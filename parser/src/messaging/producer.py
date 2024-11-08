@@ -23,7 +23,7 @@ log = logging.getLogger("uvicorn.error")
 
 
 async def send_student(student: Student, major: str):
-    log.info(f"Sending student with surname: {student.surname} to topic {STUDENT_KAFKA_TOPIC}")
+    log.info(f"Sending student with name: {student.full_name} to topic {STUDENT_KAFKA_TOPIC}")
     await producer.send(
         topic=STUDENT_KAFKA_TOPIC,
         key=json.dumps(major).encode("utf-8"),

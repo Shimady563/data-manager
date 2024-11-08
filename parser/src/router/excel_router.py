@@ -16,7 +16,7 @@ log = logging.getLogger("uvicorn.error")
     path="/upload/excel/students/",
     status_code=HTTPStatus.ACCEPTED
 )
-async def get_students(file: UploadFile, major: str, course: int):
+async def get_students(file: UploadFile, major: str, group: str, course: int):
     if (file.content_type not in
             ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
              'application/vnd.ms-excel']):
@@ -24,7 +24,7 @@ async def get_students(file: UploadFile, major: str, course: int):
         raise HTTPException(status_code=400, detail="Wrong file format")
 
     content = await file.read()
-    students: list[Student] = student_service.get_students(BytesIO(content), course)
+    students: list[Student] = student_service.get_students(BytesIO(content), group, course)
 
     for student in students:
         await producer.send_student(student, major)
