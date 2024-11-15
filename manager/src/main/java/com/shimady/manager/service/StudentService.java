@@ -39,7 +39,7 @@ public class StudentService {
 
     @Transactional(readOnly = true)
     public List<StudentResponse> getAllStudents() {
-        return studentRepository.findAll().stream()
+        return studentRepository.findAllFetchMajor().stream()
                 .map(s -> mapper.map(s, StudentResponse.class))
                 .toList();
     }
@@ -51,5 +51,6 @@ public class StudentService {
         student.setCourse(request.getCourse());
         student.setGroup(request.getGroup());
         student.setHasRecordBook(request.getHasRecordBook());
+        studentRepository.save(student);
     }
 }
