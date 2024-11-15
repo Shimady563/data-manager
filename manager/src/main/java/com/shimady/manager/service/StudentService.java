@@ -29,7 +29,7 @@ public class StudentService {
     }
 
     @Transactional
-    public void createMajorFromPayload(StudentPayload message, String majorName) {
+    public void createStudentFromPayload(StudentPayload message, String majorName) {
         log.info("Creating student from payload with full name: {}", message.getFullName());
         Student student = mapper.map(message, Student.class);
         Major major = majorService.getRawMajorByName(majorName);

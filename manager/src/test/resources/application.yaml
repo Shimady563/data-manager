@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: manager
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: postgres
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  liquibase:
+    change-log: classpath:/db/changelog/db-changelog-master.xml
+  kafka:
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      group-id: manager
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: "*"
+logging:
+  level:
+    root: info
+server:
+  servlet:
+    context-path: /api/v1
+kafka:
+  topic:
+    1: student
+    2: discipline
+springdoc:
+  api-docs:
+    path: /api-docs

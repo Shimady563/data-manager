@@ -19,7 +19,7 @@ public class DisciplineService {
     private final ModelMapper mapper;
 
     @Transactional
-    public void createMajorFromPayload(DisciplinePayload message, String majorName) {
+    public void createDisciplineFromPayload(DisciplinePayload message, String majorName) {
         log.info("Creating discipline from payload with name: {}", message.getName());
         Discipline discipline = mapper.map(message, Discipline.class);
         Major major = majorService.getRawMajorByName(majorName);
