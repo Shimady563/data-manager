@@ -17,3 +17,6 @@ kafka:
   topic:
     1: student
     2: discipline
+springdoc:
+  api-docs:
+    path: /api-docs

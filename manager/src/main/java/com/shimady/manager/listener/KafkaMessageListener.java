@@ -29,7 +29,7 @@ public class KafkaMessageListener {
                 message,
                 major,
                 partition);
-        studentService.createFromPayload(message, major);
+        studentService.createMajorFromPayload(message, major);
     }
 
     @KafkaListener(topics = "${kafka.topic.2}", groupId = "manager")
@@ -42,6 +42,6 @@ public class KafkaMessageListener {
                 message,
                 major,
                 partition);
-        disciplineService.createFromPayload(message, major);
+        disciplineService.createMajorFromPayload(message, major);
     }
 }
