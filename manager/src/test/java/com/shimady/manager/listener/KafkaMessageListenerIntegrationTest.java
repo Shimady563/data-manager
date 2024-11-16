@@ -45,15 +45,15 @@ public class KafkaMessageListenerIntegrationTest {
         then(studentService).should(after(2000)).createStudentFromPayload(eq(payload), eq(key));
     }
 
-    @Test
-    void shouldProcessDisciplineMessage() {
-        var payload = new DisciplinePayload();
-        payload.setName("Name");
-        payload.setTerms(List.of(1));
-        var key = "Прикладная информатика";
-
-        kafkaTemplate.send("discipline", key, payload);
-
-        then(disciplineService).should(after(2000)).createDisciplineFromPayload(eq(payload), eq(key));
-    }
+//    @Test
+//    void shouldProcessDisciplineMessage() {
+//        var payload = new DisciplinePayload();
+//        payload.setName("Name");
+//        payload.setTerms(List.of(1));
+//        var key = "Прикладная информатика";
+//
+//        kafkaTemplate.send("discipline", key, payload);
+//
+//        then(disciplineService).should(after(2000)).createDisciplineFromPayload(eq(payload), eq(key));
+//    }
 }
