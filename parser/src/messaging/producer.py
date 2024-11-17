@@ -23,18 +23,22 @@ log = logging.getLogger("uvicorn.error")
 
 
 async def send_student(student: Student, major: str):
-    log.info(f"Sending student with surname: {student.surname} to topic {STUDENT_KAFKA_TOPIC}")
+    log.info(f"Sending student with name: {student.full_name} to topic {STUDENT_KAFKA_TOPIC}")
+    headers = [("__TypeId__", b"com.shimady.manager.model.dto.StudentPayload")]
     await producer.send(
+        headers=headers,
         topic=STUDENT_KAFKA_TOPIC,
-        key=json.dumps(major).encode("utf-8"),
+        key=major.encode("utf-8"),
         value=json.dumps(student.dict()).encode("utf-8")
     )
 
 
 async def send_discipline(discipline: Discipline, major: str):
     log.info(f"Sending discipline message with name: {discipline.name} to topic {DISCIPLINE_KAFKA_TOPIC}")
+    headers = [("__TypeId__", b"com.shimady.manager.model.dto.DisciplinePayload")]
     await producer.send(
+        headers=headers,
         topic=DISCIPLINE_KAFKA_TOPIC,
-        key=json.dumps(major).encode("utf-8"),
+        key=major.encode("utf-8"),
         value=json.dumps(discipline.dict()).encode("utf-8")
     )

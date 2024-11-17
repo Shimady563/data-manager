@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+    <changeSet id="2024-11-06-crete-table-student" author="Shimady">
+        <createSequence sequenceName="student_id_seq"/>
+
+        <createTable tableName="student">
+            <column name="id" type="bigserial" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="full_name" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+            <column name="course" type="smallint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="student_group" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+            <column name="has_record_book" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="major_id" type="bigint">
+                <constraints foreignKeyName="student_major_fkey"
+                             references="major(id)"
+                             nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

@@ -2,9 +2,8 @@ from pydantic.v1 import BaseModel
 
 
 class Student(BaseModel):
-    name: str
-    surname: str
-    patronymic: str
+    full_name: str
+    group: str
     course: int
 
 
