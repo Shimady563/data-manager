@@ -2,12 +2,16 @@
   <div class="container">
     <div class="row">
       <div class="col-12">
-        <button class="btn btn-dark custom-button" type="button" @click="showStudentModal = true">
-          Загрузить список студентов
-        </button>
-        <button class="btn btn-dark custom-button" type="button" @click="showDisciplineModal = true">
-          Загрузить список дисциплин
-        </button>
+        <RouterLink to="/student">
+          <button class="btn btn-dark custom-button" type="button" @click="showStudentModal = true">
+            Загрузить список студентов
+          </button>
+        </RouterLink>
+        <RouterLink to="/discipline">
+          <button class="btn btn-dark custom-button" type="button" @click="showDisciplineModal = true">
+            Загрузить список дисциплин
+          </button>
+        </RouterLink>
         <StudentsTable :students="students" @toggle-record-book="toggleRecordBook"/>
       </div>
     </div>

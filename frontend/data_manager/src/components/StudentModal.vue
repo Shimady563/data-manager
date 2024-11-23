@@ -20,7 +20,9 @@
         <span class="file-name" v-if="form.fileName">{{ form.fileName }}</span>
       </div>
       <div class="modal-actions">
-        <button class="btn btn-secondary" @click="$emit('close')">Отмена</button>
+        <RouterLink to="/">
+          <button class="btn btn-secondary" @click="$emit('close')">Отмена</button>
+        </RouterLink>
         <button class="btn btn-primary" @click="submitForm">Загрузить</button>
       </div>
     </div>
