@@ -1,0 +1,116 @@
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.modal {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    max-width: 500px;
+    width: 90%;
+    position: relative;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal h5 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+}
+
+.modal-actions .btn {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.modal-actions .btn-secondary {
+    background-color: #f8f9fa;
+    border: 1px solid #ccc;
+    color: #333;
+}
+
+.modal-actions .btn-primary {
+    background-color: #007bff;
+    border: none;
+    color: white;
+}
+
+.modal-actions .btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.custom-input,
+.custom-select {
+    width: 100%;
+    padding: 0.5rem;
+    margin: 0.5rem 0;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.file-upload {
+    position: relative;
+    display: inline-block;
+    margin: 0.5rem 0;
+}
+
+.file-input {
+    display: none;
+}
+
+.file-label {
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.file-label:hover {
+    background-color: #0056b3;
+}
+
+.file-name {
+    margin-top: 0.5rem;
+    display: block;
+    font-size: 0.9rem;
+    color: #555;
+}
