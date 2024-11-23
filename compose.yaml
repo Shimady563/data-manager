@@ -33,6 +33,18 @@ services:
       kafka:
         condition: service_healthy
 
+  frontend:
+    container_name: frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    environment:
+      - SPRING_APP_API_URL=http://localhost:8080
+    depends_on:
+      - manager
+
   postgres:
     container_name: postgres
     image: postgres:alpine
