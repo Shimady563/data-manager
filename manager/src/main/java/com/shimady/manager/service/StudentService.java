@@ -24,6 +24,7 @@ public class StudentService {
     private final ModelMapper mapper;
 
     protected Student getRawStudentById(Long id) {
+        log.info("Getting student by id: {}", id);
         return studentRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Student with id: " + id + " not found"));
     }
@@ -39,6 +40,7 @@ public class StudentService {
 
     @Transactional(readOnly = true)
     public List<StudentResponse> getAllStudents() {
+        log.info("Getting all students");
         return studentRepository.findAllFetchMajor().stream()
                 .map(s -> mapper.map(s, StudentResponse.class))
                 .toList();
@@ -46,6 +48,7 @@ public class StudentService {
 
     @Transactional
     public void updateStudent(Long id, StudentUpdateRequest request) {
+        log.info("Updating student with id: {}", id);
         Student student = getRawStudentById(id);
         student.setFullName(request.getFullName());
         student.setCourse(request.getCourse());

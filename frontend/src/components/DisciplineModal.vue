@@ -3,15 +3,15 @@
     <div class="modal">
       <h5>Загрузить список дисциплин</h5>
       <label>Направление:</label>
-      <select class="custom-select" v-model="form.direction">
+      <select class="custom-select" required v-model="form.direction">
         <option disabled value="">Выберите направление</option>
-        <option v-for="direction in directions" :key="direction.id" :value="direction.id">
+        <option v-for="direction in directions" :key="direction.id" :value="direction.name">
           {{ direction.name }}
         </option>
       </select>
       <label></label>
       <div class="file-upload">
-        <input type="file" id="disciplineFile" class="file-input" @change="onFileChange" />
+        <input type="file" id="disciplineFile" class="file-input" required @change="onFileChange" />
         <label for="disciplineFile" class="file-label">Выбрать файл</label>
         <span class="file-name" v-if="form.fileName">{{ form.fileName }}</span>
       </div>
@@ -37,6 +37,7 @@ export default {
       const file = event.target.files[0];
       if (file) {
         this.form.fileName = file.name;
+        this.form.file = file;
       }
     },
     submitForm() {

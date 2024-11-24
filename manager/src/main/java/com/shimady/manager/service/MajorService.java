@@ -20,6 +20,7 @@ public class MajorService {
     private final ModelMapper mapper;
 
     protected Major getRawMajorByName(String majorName) {
+        log.info("Getting major by name: {}", majorName);
         return majorRepository.findByName(majorName)
                 .orElseThrow(() -> new ResourceNotFoundException("Major with name: " + majorName + " not found"));
 
@@ -27,6 +28,7 @@ public class MajorService {
 
     @Transactional(readOnly = true)
     public List<MajorResponse> getAllMajors() {
+        log.info("Getting all majors");
         return majorRepository.findAll().stream()
                 .map(m -> mapper.map(m, MajorResponse.class))
                 .toList();

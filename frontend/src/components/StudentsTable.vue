@@ -20,7 +20,7 @@
           <input
               type="checkbox"
               :checked="student.hasRecordBook"
-              @change="$emit('toggle-record-book', student)"
+              @change="$emit('toggle-record-book', student, student.id)"
           />
         </td>
       </tr>
