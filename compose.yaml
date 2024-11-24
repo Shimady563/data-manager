@@ -44,6 +44,7 @@ services:
       - VUE_APP_API_URL=http://localhost:8080
     depends_on:
       - manager
+      - parser
 
   postgres:
     container_name: postgres
