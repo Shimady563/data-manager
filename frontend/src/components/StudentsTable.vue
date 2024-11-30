@@ -7,6 +7,7 @@
         <th>ФИО</th>
         <th>Группа</th>
         <th>Курс</th>
+        <th>Направление</th>
         <th>Зачетная книжка</th>
       </tr>
       </thead>
@@ -16,6 +17,7 @@
         <td>{{ student.fullName }}</td>
         <td>{{ student.group }}</td>
         <td>{{ student.course }}</td>
+        <td>{{ student.majorName }}</td>
         <td>
           <input
               type="checkbox"
